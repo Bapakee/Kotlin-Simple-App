@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/expenses_navigation"
+    app:startDestination="@id/expensesFragment">
+
+    <fragment
+        android:id="@+id/expensesFragment"
+        android:name="com.example.anmproject.view.ExpensesFragment"
+        android:label="fragment_expenses"
+        tools:layout="@layout/fragment_expenses" >
+        <action
+            android:id="@+id/actionNewExpenses"
+            app:destination="@id/newExpensesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newExpensesFragment"
+        android:name="com.example.anmproject.view.NewExpensesFragment"
+        android:label="fragment_new_expenses"
+        tools:layout="@layout/fragment_new_expenses" >
+        <action
+            android:id="@+id/actionExpenses"
+            app:destination="@id/expensesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/budgetingFragment"
+        android:name="com.example.anmproject.view.BudgetingFragment"
+        android:label="fragment_budgeting"
+        tools:layout="@layout/fragment_budgeting" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.anmproject.view.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.example.anmproject.view.ReportFragment"
+        android:label="fragment_report"
+        tools:layout="@layout/fragment_report" />
+</navigation>
