@@ -1,5 +1,4 @@
 import android.content.Context
-import androidx.room.Room
 import com.example.anmproject.model.UserDatabase
 
 val DB_NAME = "newuserdb"

@@ -1,5 +1,6 @@
 package com.example.anmproject.model
 
+import DB_NAME
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -17,7 +18,7 @@ abstract class UserDatabase:RoomDatabase() {
             Room.databaseBuilder(
                 context.applicationContext,
                 UserDatabase::class.java,
-                "newuserdb").build()
+                DB_NAME).build()
         
         operator fun invoke(context:Context) {
             if(instance == null) {
