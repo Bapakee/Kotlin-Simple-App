@@ -32,6 +32,12 @@ class DetailUserViewModel (application:  Application)
             userLD.postValue(db.userDao().Login(username,pass))
         }
     }
+    fun selectAll() {
+        launch {
+            val db = buildDb(getApplication())
+            db.userDao().selectAllUser()
+        }
+    }
 
 
 }

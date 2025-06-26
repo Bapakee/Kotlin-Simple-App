@@ -1,6 +1,6 @@
 [versions]
 agp = "8.10.0"
-kotlin = "1.5.21"
+kotlin = "2.1.0"
 coreKtx = "1.10.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -18,6 +18,8 @@ navigationUIKTX = "2.5.3"
 roomRuntime = "2.5.1"
 roomKTX = "2.5.1"
 roomCompiler = "2.5.1"
+
+
 
 
 

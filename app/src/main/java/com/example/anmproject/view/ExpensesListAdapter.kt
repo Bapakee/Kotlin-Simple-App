@@ -2,11 +2,10 @@ package com.example.anmproject.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.anmproject.databinding.ExpensesListItemBinding
+import com.example.anmproject.model.Budgeting
 import com.example.anmproject.model.Expenses
-import com.example.anmproject.model.User
 
 class ExpensesListAdapter (val expensesList:ArrayList<Expenses>)
     :RecyclerView.Adapter<ExpensesListAdapter.ExpensesViewHolder>(){
@@ -29,15 +28,15 @@ class ExpensesListAdapter (val expensesList:ArrayList<Expenses>)
         holder.binding.textTanggalExpenses.text = expensesList[position].tanggal
 
 
-        fun updateStudentList(newExpensesList: ArrayList<Expenses>) {
-            expensesList.clear()
-            expensesList.addAll(newExpensesList)
-            notifyDataSetChanged()
-        }
+
 
 
     }
-
+    fun updateStudentList(newExpensesList: List<Expenses>) {
+        expensesList.clear()
+        expensesList.addAll(newExpensesList)
+        notifyDataSetChanged()
+    }
     override fun getItemCount(): Int {
         return expensesList.size
     }

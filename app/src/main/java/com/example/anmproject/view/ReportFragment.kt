@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.anmproject.R
 import com.example.anmproject.databinding.FragmentReportBinding
 import com.example.anmproject.viewmodel.ListViewModel
 
@@ -39,7 +38,7 @@ class ReportFragment : Fragment() {
     }
     fun observeViewModel() {
         viewModel.expensesLD.observe(viewLifecycleOwner, Observer {
-            expensesListAdapter.update(it)
+            expensesListAdapter.updateStudentList(it)
         })
     }
 

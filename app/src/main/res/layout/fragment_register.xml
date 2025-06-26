@@ -10,26 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="#00FFFFFF"
-            app:icon="@drawable/back_button"
-            app:iconSize="30dp"
-            app:iconTint="#000000"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/textCreateAcc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="108dp"
             android:text="Create Account"
-            tools:layout_editor_absoluteX="138dp"
-            tools:layout_editor_absoluteY="119dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout3"
