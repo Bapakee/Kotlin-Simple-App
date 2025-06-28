@@ -15,6 +15,7 @@ import kotlin.coroutines.CoroutineContext
 class DetailUserViewModel (application:  Application)
     :AndroidViewModel(application), CoroutineScope {
     val userLD = MutableLiveData<User>()
+
     private val job = Job()
 
     fun addTodo(list:List<User>) {
@@ -23,6 +24,7 @@ class DetailUserViewModel (application:  Application)
             db.userDao().insertAll(*list.toTypedArray())
         }
     }
+
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.IO
 
@@ -32,6 +34,14 @@ class DetailUserViewModel (application:  Application)
             userLD.postValue(db.userDao().Login(username,pass))
         }
     }
+
+    fun cekUsername(username:String) {
+        launch {
+            val db = buildDb(getApplication())
+            userLD.postValue(db.userDao().cekUsername(username))
+        }
+    }
+
     fun selectAll() {
         launch {
             val db = buildDb(getApplication())

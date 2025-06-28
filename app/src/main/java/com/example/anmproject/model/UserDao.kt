@@ -20,6 +20,9 @@ interface UserDao {
     @Query("SELECT * FROM user WHERE username= :username AND password= :pass")
     fun Login(username:String,pass:String): User
 
+    @Query("SELECT * FROM user WHERE username= :username")
+    fun cekUsername(username: String):User
+
     @Delete
     fun deleteTodo(user:User)
 }

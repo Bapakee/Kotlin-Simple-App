@@ -6,19 +6,19 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
+
+@Dao
 interface BudgetingDao {
-    @Dao
-    interface BudgetingDao {
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
-        fun insertAll(vararg budgeting: Budgeting)
 
-        @Query("SELECT * FROM budgeting")
-        fun selectAllBudgeting(): List<Budgeting>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg budgeting: Budgeting)
 
-        @Query("SELECT * FROM budgeting WHERE uuid= :id")
-        fun selectBudgeting(id:Int): Budgeting
+    @Query("SELECT * FROM budgeting")
+    fun selectAllBudgeting(): List<Budgeting>
 
-        @Delete
-        fun deleteBudgeting(budgeting:Budgeting)
-    }
+    @Query("SELECT * FROM budgeting WHERE idUser= :id")
+    fun selectBudgeting(id:String): List<Budgeting>
+
+    @Delete
+    fun deleteBudgeting(budgeting:Budgeting)
 }

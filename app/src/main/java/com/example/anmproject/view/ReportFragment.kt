@@ -31,8 +31,8 @@ class ReportFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ListViewModel::class.java)
         viewModel.refresh()
 
-        binding.recView.layoutManager = LinearLayoutManager(context)
-        binding.recView.adapter = expensesListAdapter
+        binding.recViewBudgeting.layoutManager = LinearLayoutManager(context)
+        binding.recViewBudgeting.adapter = expensesListAdapter
 
         observeViewModel()
     }

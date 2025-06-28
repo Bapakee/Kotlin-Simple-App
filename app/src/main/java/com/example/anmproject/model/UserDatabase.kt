@@ -9,6 +9,8 @@ import androidx.room.RoomDatabase
 @Database(entities = arrayOf(User::class,Expenses::class,Budgeting::class), version =  1)
 abstract class UserDatabase:RoomDatabase() {
     abstract fun userDao(): UserDao
+    abstract fun budgetingDao(): BudgetingDao
+    abstract fun expensesDao(): ExpensesDao
 
     companion object {
         @Volatile private var instance: UserDatabase ?= null

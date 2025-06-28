@@ -21,12 +21,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val sharedPreferences: SharedPreferences =
-            getSharedPreferences("SETTING", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putBoolean("isLoggedIn", false)
-        editor.apply()
-
         navController =
             (supportFragmentManager.findFragmentById(R.id.fragmentHost)
                     as NavHostFragment).navController

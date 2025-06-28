@@ -23,20 +23,18 @@ class ExpensesListAdapter (val expensesList:ArrayList<Expenses>)
         holder: ExpensesViewHolder,
         position: Int
     ) {
-        holder.binding.textNominalExpenses.text = expensesList[position].nominal
+        holder.binding.textNominalExpenses.text = expensesList[position].nominal.toString()
         holder.binding.textKategori.text = expensesList[position].idBudgeting
         holder.binding.textTanggalExpenses.text = expensesList[position].tanggal
-
-
-
-
-
     }
     fun updateStudentList(newExpensesList: List<Expenses>) {
         expensesList.clear()
         expensesList.addAll(newExpensesList)
         notifyDataSetChanged()
     }
+
+
+
     override fun getItemCount(): Int {
         return expensesList.size
     }

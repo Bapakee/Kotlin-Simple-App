@@ -11,7 +11,7 @@ data class Budgeting(
     @ColumnInfo(name="name")
     var name:String?,
     @ColumnInfo(name="budget")
-    var budget:String?
+    var budget:Int?
 ){
     @PrimaryKey(autoGenerate = true)
     var uuid:Int =0
@@ -29,7 +29,7 @@ data class Expenses(
     @ColumnInfo(name="tanggal")
     var tanggal:String?,
     @ColumnInfo(name="nominal")
-    var nominal:String?,
+    var nominal:Int?,
     @ColumnInfo(name="deskripsi")
     var deskripsi:String?
 ){

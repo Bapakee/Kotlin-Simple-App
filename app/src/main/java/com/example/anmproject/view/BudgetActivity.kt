@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.example.anmproject.R
 import com.example.anmproject.databinding.ActivityBudgetBinding
 import com.example.anmproject.databinding.ActivityMainBinding
@@ -23,5 +25,6 @@ class BudgetActivity : AppCompatActivity() {
             (supportFragmentManager.findFragmentById(R.id.navHostExpenses)
                     as NavHostFragment).navController
         NavigationUI.setupActionBarWithNavController(this, navController)
+        binding.bottomNav.setupWithNavController(navController)
     }
 }
