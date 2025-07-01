@@ -27,4 +27,8 @@ class BudgetActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController)
         binding.bottomNav.setupWithNavController(navController)
     }
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
+    }
+
 }

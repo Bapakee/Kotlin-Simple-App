@@ -24,8 +24,6 @@ data class Expenses(
     var idUser:String?,
     @ColumnInfo(name="idBudgeting")
     var idBudgeting:String?,
-    @ColumnInfo(name="name")
-    var name:String?,
     @ColumnInfo(name="tanggal")
     var tanggal:String?,
     @ColumnInfo(name="nominal")

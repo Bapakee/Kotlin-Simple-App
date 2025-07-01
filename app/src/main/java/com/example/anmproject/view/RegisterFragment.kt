@@ -32,33 +32,30 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.buttonCreate.setOnClickListener {
-            var user = User(
-                binding.textUsername.text.toString(),
-                binding.textFirstName.text.toString(),
-                binding.textLastName.text.toString(),
-                binding.textPassword.text.toString()
-            )
-            val list = listOf(user)
-            viewModel.cekUsername(list[0].username.toString())
-            val cek = observeViewModel(list)
-            if (cek == true){
-                Toast.makeText(view.context, "Data added", Toast.LENGTH_LONG).show()
-                Navigation.findNavController(it).popBackStack()
+            if(binding.textPassword.text.toString()!=binding.textRepeatPassword.text.toString()){
+                Toast.makeText(context,"Error ! Repeat Password Tidak Sama",Toast.LENGTH_SHORT).show()
+            }else{
+                var user = User(
+                    binding.textUsername.text.toString(),
+                    binding.textFirstName.text.toString(),
+                    binding.textLastName.text.toString(),
+                    binding.textPassword.text.toString()
+                )
+                val list = listOf(user)
+                viewModel.cekUsername(list[0].username.toString())
+                observeViewModel(list,view)
             }
         }
     }
-    fun observeViewModel(list: List<User>): Boolean {
-        var cek = false
+    fun observeViewModel(list: List<User>,view:View) {
         viewModel.userLD.observe(viewLifecycleOwner, Observer {
             if (it != null){
                 Toast.makeText(context,"Error ! Username Sudah ada",Toast.LENGTH_SHORT).show()
-                cek = false
             }else{
                 viewModel.addTodo(list)
-                cek = true
+                Toast.makeText(view.context, "Data added", Toast.LENGTH_LONG).show()
+                Navigation.findNavController(view).popBackStack()
             }
-
         })
-        return cek
     }
 }

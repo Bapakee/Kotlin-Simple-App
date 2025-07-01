@@ -34,15 +34,15 @@ class ExpensesListViewModel(application: Application)
         }
     }
 
-//    fun getBudgetExpenses(userId:String,budgetId:String) {
-//        loadingLD.value = true
-//        expensesLoadErrorLD.value = false
-//        launch {
-//            val db = buildDb(getApplication())
-//            expensesLD.postValue(db.expensesDao().selectExpensesBudget(userId,budgetId))
-//            loadingLD.postValue(false)
-//        }
-//    }
+    fun selectExpenses(userId:String) {
+        loadingLD.value = true
+        expensesLoadErrorLD.value = false
+        launch {
+            val db = buildDb(getApplication())
+            expensesLD.postValue(db.expensesDao().selectExpenses(userId))
+            loadingLD.postValue(false)
+        }
+    }
 
     fun clearTask(expenses: Expenses) {
         launch {

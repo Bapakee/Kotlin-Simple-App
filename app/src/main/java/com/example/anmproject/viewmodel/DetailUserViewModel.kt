@@ -42,12 +42,18 @@ class DetailUserViewModel (application:  Application)
         }
     }
 
-    fun selectAll() {
+    fun selectUser(userId:Int) {
         launch {
             val db = buildDb(getApplication())
-            db.userDao().selectAllUser()
+            userLD.postValue(db.userDao().selectUser(userId))
         }
     }
 
+    fun updatePassword(userId:Int,password:String){
+        launch {
+            val db = buildDb(getApplication())
+            db.userDao().updatePass(userId,password)
+        }
+    }
 
 }

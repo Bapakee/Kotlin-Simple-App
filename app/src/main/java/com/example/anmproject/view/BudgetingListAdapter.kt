@@ -3,9 +3,11 @@ package com.example.anmproject.view
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.anmproject.databinding.BudgetingListItemBinding
 import com.example.anmproject.model.Budgeting
+import java.text.DecimalFormat
 
 class BudgetingListAdapter (val budgetingList:ArrayList<Budgeting>)
 :RecyclerView.Adapter<BudgetingListAdapter.BudgetingViewHolder>() {
@@ -18,13 +20,24 @@ class BudgetingListAdapter (val budgetingList:ArrayList<Budgeting>)
         return BudgetingViewHolder(binding)
 
     }
+    fun formatter(n: Int) =
+        DecimalFormat("#,###")
+            .format(n)
+            .replace(",", ".")
 
     override fun onBindViewHolder(
         holder: BudgetingViewHolder,
         position: Int
     ) {
-        holder.binding.textKategoriBudgeting.text = budgetingList[position].name
-        holder.binding.textNominalBudgeting.text = budgetingList[position].budget.toString()
+        val nama = budgetingList[position].name.toString()
+        val nominal = budgetingList[position].budget.toString().toInt()
+        holder.binding.textKategoriBudgeting.text = nama
+        holder.binding.textNominalBudgeting.text = "Rp. "+formatter(nominal)
+
+        holder.binding.cardBudget.setOnClickListener {
+            val action = BudgetingFragmentDirections.actionNewBudget(nominal,nama,newBudget = false,(position+1).toString())
+            Navigation.findNavController(it).navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {

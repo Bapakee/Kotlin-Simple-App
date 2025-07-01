@@ -21,11 +21,15 @@ class DetailBudgetingViewModel (application:  Application)
         get() = job + Dispatchers.IO
 
     fun addBudget (list:List<Budgeting>){
-        loadingLD.value=true
         launch {
             val db = buildDb(getApplication())
             db.budgetingDao().insertAll(*list.toTypedArray())
-            loadingLD.value=false
+        }
+    }
+    fun editBudget (id:String,userid:String,nama:String,budget:Int){
+        launch {
+            val db = buildDb(getApplication())
+            db.budgetingDao().updateBudgeting(id,userid,nama,budget)
         }
     }
 

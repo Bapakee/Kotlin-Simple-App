@@ -4,22 +4,25 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.example.anmproject.R
-import com.example.anmproject.databinding.FragmentExpensesBinding
 import com.example.anmproject.databinding.FragmentNewExpensesBinding
 import com.example.anmproject.model.Budgeting
+import com.example.anmproject.model.Expenses
 import com.example.anmproject.viewmodel.BudgetingListViewModel
-import com.example.anmproject.viewmodel.DetailBudgetingViewModel
 import com.example.anmproject.viewmodel.DetailExpensesViewModel
+import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class NewExpensesFragment : Fragment() {
@@ -48,16 +51,41 @@ class NewExpensesFragment : Fragment() {
             requireContext().getSharedPreferences("SETTING", Context.MODE_PRIVATE)
 
         val userId = sharedPreferences.getString("uuid","").toString()
-        viewModelBudgeting = ViewModelProvider(this).get(BudgetingListViewModel::class.java)
+        var budgetingId=0
+        val currentExpenses=0
+        var budgetMax=0
+
         viewModelExpenses =
             ViewModelProvider(this).get(DetailExpensesViewModel::class.java)
+        viewModelBudgeting = ViewModelProvider(this).get(BudgetingListViewModel::class.java)
         viewModelBudgeting.refresh(userId)
         observeViewModelBudgeting()
-
+        val currentDate: String? =
+            SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+        binding.textTanggal.text=currentDate
         super.onViewCreated(view, savedInstanceState)
+
         binding.buttonAdd.setOnClickListener {
-            val action = NewExpensesFragmentDirections.actionExpenses()
-            Navigation.findNavController(it).navigate(action)
+            val nominal = binding.textNominal.text.toString().toInt()
+
+            if(nominal<0){
+                Toast.makeText(view.context, "Error Nominal Tidak Boleh Negatif", Toast.LENGTH_LONG).show()
+            }else if(currentExpenses+nominal>budgetMax){
+                Toast.makeText(view.context, "Error Expens Anda Lebih Dari Budget", Toast.LENGTH_LONG).show()
+            } else{
+                val expensesBaru = Expenses(
+                    userId,
+                    budgetingId.toString(),
+                    tanggal = currentDate,
+                    nominal = nominal,
+                    deskripsi = binding.textDeskripsi.text.toString(),
+                )
+                val list = listOf(expensesBaru)
+                Log.d("cek expens",list.toString())
+                viewModelExpenses.addExpenses(list)
+                Toast.makeText(view.context, "Data added", Toast.LENGTH_LONG).show()
+                Navigation.findNavController(it).popBackStack()
+            }
         }
 
         binding.spinnerKategori.onItemSelectedListener= object: AdapterView.OnItemSelectedListener {
@@ -67,10 +95,14 @@ class NewExpensesFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                viewModelExpenses.hitung(userId,listOfBudget[position].uuid.toString())
-                observeViewModelExpenses()
-                binding.textMaxBudgetNew.text = listOfBudget[position].budget.toString()
-                binding.textCurrentExpensesNew.text= "0"
+                budgetingId=position+1
+                viewModelExpenses.hitung(userId,budgetingId.toString())
+                Log.d("cek posisi",position.toString())
+
+                budgetMax=listOfBudget[position].budget.toString().toInt()
+
+                observeViewModelExpenses(listOfBudget[position].budget.toString().toInt())
+                binding.textMaxBudgetNew.text = "Rp. "+formatter(budgetMax)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -78,32 +110,37 @@ class NewExpensesFragment : Fragment() {
         }
     }
 
-    fun observeViewModelExpenses(){
-        viewModelExpenses.expensesLD.observe(viewLifecycleOwner, Observer {
-            binding.textCurrentExpensesNew.text=it.toString()
+    fun observeViewModelExpenses(budget:Int){
+        viewModelExpenses.expensesHitungLD.observe(viewLifecycleOwner, Observer {
+
+            if(it==null){
+                binding.textCurrentExpensesNew.text="0"
+            }else{
+                binding.progressBar2.setProgress((it*100/budget))
+                Log.d("Cek Hitung",(it*100/budget).toString())
+                binding.textCurrentExpensesNew.text= "Rp. "+formatter(it)
+            }
         })
     }
 
 
     fun observeViewModelBudgeting() {
         viewModelBudgeting.budgetingLD.observe(viewLifecycleOwner, Observer {
-//            val adapter = object : ArrayAdapter<Budgeting>(
-//                requireContext(),
-//                android.R.layout.simple_spinner_item,
-//                it
-//            ){}
             for (budget in it){
                 listOfBudget.add(budget)
             }
             for (budgetname in listOfBudget){
                 listOfBudgetName.add(budgetname.name.toString())
             }
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//            binding.spinnerKategori.adapter = listOfBudgetName
             val budgetAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item,listOfBudgetName)
             budgetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinnerKategori.adapter = budgetAdapter
         })
 
     }
+    fun formatter(n: Int) =
+        DecimalFormat("#,###")
+            .format(n)
+            .replace(",", ".")
+
 }

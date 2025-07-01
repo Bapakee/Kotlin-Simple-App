@@ -15,6 +15,7 @@ import kotlin.coroutines.CoroutineContext
 class DetailExpensesViewModel (application:  Application)
     :AndroidViewModel(application), CoroutineScope {
     val expensesLD = MutableLiveData<Expenses>()
+    val expensesHitungLD = MutableLiveData<Int>()
     var loadingLD = MutableLiveData<Boolean>()
     private val job = Job()
 
@@ -31,12 +32,10 @@ class DetailExpensesViewModel (application:  Application)
     }
 
     fun hitung(userId:String,budgetId:String){
-        loadingLD.value=true
         launch {
             val db = buildDb(getApplication())
-            db.expensesDao().selectTotalExpensesBudget(userId,budgetId)
-            loadingLD.value=false
+
+            expensesHitungLD.postValue(db.expensesDao().selectTotalExpensesBudget(userId,budgetId))
         }
     }
-
 }

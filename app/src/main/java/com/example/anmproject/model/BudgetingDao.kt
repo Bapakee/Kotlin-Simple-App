@@ -19,6 +19,9 @@ interface BudgetingDao {
     @Query("SELECT * FROM budgeting WHERE idUser= :id")
     fun selectBudgeting(id:String): List<Budgeting>
 
+    @Query("UPDATE budgeting SET name=:nama, budget=:budget WHERE uuid= :id and idUser=:userid")
+    fun updateBudgeting(id:String,userid:String,nama:String,budget:Int)
+
     @Delete
     fun deleteBudgeting(budgeting:Budgeting)
 }
